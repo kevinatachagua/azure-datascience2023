@@ -1,6 +1,15 @@
 {
 	"name": "business_student_overview",
 	"properties": {
+		"activities": [
+			{
+				"name": "Demo",
+				"description": "Demo",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
 		"folder": {
 			"name": "03_business_reports"
 		},

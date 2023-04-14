@@ -1,6 +1,15 @@
 {
 	"name": "master_party_core",
 	"properties": {
+		"activities": [
+			{
+				"name": "Demo",
+				"description": "Demo",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
 		"folder": {
 			"name": "02_master_models"
 		},

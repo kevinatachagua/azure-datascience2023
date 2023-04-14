@@ -1,6 +1,14 @@
 {
 	"name": "raw_ga4_core",
 	"properties": {
+		"activities": [
+			{
+				"name": "Demo",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
 		"folder": {
 			"name": "01_raw_source"
 		},

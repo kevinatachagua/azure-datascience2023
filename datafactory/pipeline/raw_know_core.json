@@ -1,6 +1,15 @@
 {
 	"name": "raw_know_core",
 	"properties": {
+		"activities": [
+			{
+				"name": "Demo",
+				"description": "Demo",
+				"type": "SetVariable",
+				"dependsOn": [],
+				"userProperties": []
+			}
+		],
 		"folder": {
 			"name": "01_raw_source"
 		},
