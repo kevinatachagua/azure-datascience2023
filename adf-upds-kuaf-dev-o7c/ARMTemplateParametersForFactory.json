@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adf-upds-kuaf-dev-o7c"
+		},
+		"ADLSLinkedService_accountKey": {
+			"value": ""
+		},
+		"FileLinkedService_password": {
+			"value": ""
+		},
+		"ADLSLinkedService_properties_typeProperties_url": {
+			"value": "https://dlsupdskuafdevi5l.dfs.core.windows.net/"
+		},
+		"FileLinkedService_properties_typeProperties_host": {
+			"value": "\\\\DESKTOP-RBFTL9T\\D$\\data"
+		},
+		"FileLinkedService_properties_typeProperties_userId": {
+			"value": "MicrosoftAccount\\KEVIN"
+		}
+	}
+}
