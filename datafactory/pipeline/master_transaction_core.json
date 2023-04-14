@@ -7,9 +7,18 @@
 				"description": "Demo",
 				"type": "SetVariable",
 				"dependsOn": [],
-				"userProperties": []
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "demo",
+					"value": ""
+				}
 			}
 		],
+		"variables": {
+			"demo": {
+				"type": "String"
+			}
+		},
 		"folder": {
 			"name": "02_master_models"
 		},
