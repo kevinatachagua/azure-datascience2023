@@ -1,0 +1,11 @@
+{
+	"name": "business_student_overview",
+	"properties": {
+		"folder": {
+			"name": "03_business_reports"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-04-14T00:52:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
