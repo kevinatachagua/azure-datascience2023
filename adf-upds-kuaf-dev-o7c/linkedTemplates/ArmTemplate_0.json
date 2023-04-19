@@ -4,16 +4,16 @@
 	"parameters": {
 		"factoryName": {
 			"type": "string",
-			"metadata": "Nombre de instancia de Data Factory",
+			"metadata": "Data Factory name",
 			"defaultValue": "adf-upds-kuaf-dev-o7c"
 		},
 		"ADLSLinkedService_accountKey": {
 			"type": "secureString",
-			"metadata": "Cadena protegida para \"accountKey\"de \"ADLSLinkedService\""
+			"metadata": "Secure string for 'accountKey' of 'ADLSLinkedService'"
 		},
 		"FileLinkedService_password": {
 			"type": "secureString",
-			"metadata": "Cadena protegida para \"password\"de \"FileLinkedService\""
+			"metadata": "Secure string for 'password' of 'FileLinkedService'"
 		},
 		"ADLSLinkedService_properties_typeProperties_url": {
 			"type": "string",
@@ -138,13 +138,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/raw_ga4_core')]",
+			"name": "[concat(parameters('factoryName'), '/raw_know_core')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
 						"name": "Demo",
+						"description": "Demo",
 						"type": "SetVariable",
 						"dependsOn": [],
 						"userProperties": [],
@@ -199,6 +200,46 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_target_parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					},
+					"appname": {
+						"type": "string"
+					},
+					"objectname": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@concat(dataset().appname,'/',dataset().objectname,'/',dataset().filename)",
+							"type": "Expression"
+						},
+						"folderPath": "data",
+						"fileSystem": "raw"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/FileLinkedService')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -223,31 +264,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_target_parquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLSLinkedService",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "data",
-						"fileSystem": "raw"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/ds_source_csv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -256,13 +272,30 @@
 					"referenceName": "FileLinkedService",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					},
+					"appname": {
+						"type": "string"
+					},
+					"objectname": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "users/sk_users.csv",
-						"folderPath": "sharedknow"
+						"fileName": {
+							"value": "@concat(dataset().objectname,'/',dataset().filename)",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().appname",
+							"type": "Expression"
+						}
 					},
 					"columnDelimiter": "|",
 					"escapeChar": "\\",
@@ -280,24 +313,13 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/raw_know_core')]",
+			"name": "[concat(parameters('factoryName'), '/raw_ga4_core')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"activities": [
 					{
-						"name": "Demo",
-						"description": "Demo",
-						"type": "SetVariable",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"variableName": "demo",
-							"value": "demo"
-						}
-					},
-					{
-						"name": "Copy data1",
+						"name": "Copy Users",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -343,14 +365,22 @@
 							{
 								"referenceName": "ds_source_csv",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filename": "sk_users.csv",
+									"appname": "sharedknow",
+									"objectname": "users"
+								}
 							}
 						],
 						"outputs": [
 							{
 								"referenceName": "ds_target_parquet",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filename": "users.parquet",
+									"appname": "sharedknow",
+									"objectname": "users"
+								}
 							}
 						]
 					}
