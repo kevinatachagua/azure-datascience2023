@@ -5,11 +5,26 @@
 			"referenceName": "ADLSLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"appname": {
+				"type": "string"
+			},
+			"objectname": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@concat(dataset().appname,'/',dataset().objectname,'/',dataset().filename)",
+					"type": "Expression"
+				},
 				"folderPath": "data",
 				"fileSystem": "raw"
 			},

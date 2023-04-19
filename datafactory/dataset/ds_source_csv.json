@@ -5,13 +5,30 @@
 			"referenceName": "FileLinkedService",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"filename": {
+				"type": "string"
+			},
+			"appname": {
+				"type": "string"
+			},
+			"objectname": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"fileName": "users/sk_users.csv",
-				"folderPath": "sharedknow"
+				"fileName": {
+					"value": "@concat(dataset().objectname,'/',dataset().filename)",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().appname",
+					"type": "Expression"
+				}
 			},
 			"columnDelimiter": "|",
 			"escapeChar": "\\",
