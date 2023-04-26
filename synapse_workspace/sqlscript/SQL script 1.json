@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 1",
+	"properties": {
+		"content": {
+			"query": "-----------------------------------------------\n--Paso 01\n-----------------------------------------------\nSELECT TOP (10) *\nFrom OPENROWSET (BULK '/master/lakehouse/m_party/*.parquet',\nDATA_SOURCE= 'ExternalUPDataSource',\nFORMAT ='PARQUET')  AS [file]\nGO;\n\n-----------------------------------------------\n--Paso 02\n-----------------------------------------------\nCREATE EXTERNAL TABLE master_party.m_party(\n    party_id nvarchar(50),\n    hash_unique BIGINT,\n    process_date nvarchar(10),\n    email nvarchar(50),    \n    creation_date nvarchar(40),\n    reputation_count nvarchar(20),\n    upvotes_count nvarchar(20),\n    downvotes_count nvarchar(20),\n    views_count nvarchar(20),\n    record_source nvarchar(20),\n    flag_active int,\n    load_date nvarchar(30),\n    creation_user nvarchar(20)\n)\n WITH (\n     LOCATION = '/master/lakehouse/m_party/',\n     DATA_SOURCE = ExternalUPDataSource,  \n     FILE_FORMAT = UPParquetFileFormat\n )\nGO\n\n-----------------------------------------------\n--Paso 03\n-----------------------------------------------\nSELECT party_id,hash_unique,process_date, email,creation_date,\nreputation_count, upvotes_count, downvotes_count, views_count, record_source, \nflag_active,load_date,creation_user\nFROM master_party.m_party\n\n-----------------------------------------------\n--Paso 04\n-----------------------------------------------\nCREATE EXTERNAL TABLE business_knowa.bi_period_dim \nWITH (\n    LOCATION = '/business/business_knowa/bi_period_dim/',\n    DATA_SOURCE = ExternalUPDataSource,  \n    FILE_FORMAT = UPParquetFileFormat\n) AS \nWITH ShortCreationTable(shortdate) AS (\nSELECT CONVERT(DATE, SUBSTRING(creation_date, 1,10)) AS shortdate\nFROM master_transaction.t_interaction\n), DistinctDateTable (distinctdate) AS (\nSELECT DISTINCT shortdate as distinctdate\nFROM ShortCreationTable\n)\nSELECT ROW_NUMBER() OVER(ORDER BY distinctdate ASC) AS period_id, \ndistinctdate as period,\nYEAR(distinctdate) as year,\nMONTH(distinctdate) as month\nFROM DistinctDateTable;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "master",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
