@@ -214,9 +214,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Users",
+								"activity": "Copy_Comments",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -287,9 +287,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Badges",
+								"activity": "Copy_Users",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -360,9 +360,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Comments",
+								"activity": "Copy_Badges",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -435,7 +435,7 @@
 							{
 								"activity": "Copy_Linktypes",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -508,7 +508,7 @@
 							{
 								"activity": "Copy_Postlinks",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -581,7 +581,7 @@
 							{
 								"activity": "Copy_Posts1",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -654,7 +654,7 @@
 							{
 								"activity": "Copy_Posts2",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -727,7 +727,7 @@
 							{
 								"activity": "Copy_Posttypes",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
@@ -800,7 +800,7 @@
 							{
 								"activity": "Copy_Votes",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
 								]
 							}
 						],
