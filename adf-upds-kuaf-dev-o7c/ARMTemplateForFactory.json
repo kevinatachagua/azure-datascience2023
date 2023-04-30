@@ -138,7 +138,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/raw_ga4_core')]",
+			"name": "[concat(parameters('factoryName'), '/raw_know_core')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -888,7 +888,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/raw_know_core')]",
+			"name": "[concat(parameters('factoryName'), '/raw_ga4_core')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
