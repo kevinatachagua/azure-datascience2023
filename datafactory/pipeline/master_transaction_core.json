@@ -274,18 +274,61 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DataFlow_Posts2",
+						"referenceName": "DataFlow_Posttypes",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"Posts2": {
-								"filename": "2009-01-01/posts_200901.parquet",
+							"Posttypes": {
+								"filename": "posttypes.parquet",
 								"appname": "sharedknow",
-								"objectname": "posts"
+								"objectname": "posttypes"
 							},
 							"sink2": {
-								"filename": "m_2009-01-01/m_posts_200901_[n].parquet",
+								"filename": "posttypes[n].parquet",
 								"appname": "m_sharedknow",
-								"objectname": "m_posts"
+								"objectname": "m_posttypes"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Users",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Posttypes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Posttypes",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Posttypes": {
+								"filename": "posttypes.parquet",
+								"appname": "sharedknow",
+								"objectname": "posttypes"
+							},
+							"sink2": {
+								"filename": "posttypes[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_posttypes"
 							}
 						}
 					},
