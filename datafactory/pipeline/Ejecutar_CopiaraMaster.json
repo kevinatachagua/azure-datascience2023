@@ -1,0 +1,24 @@
+{
+	"name": "Ejecutar_CopiaraMaster",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute _CopiaMaster",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "master_transaction_core",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "02_master_models"
+		},
+		"annotations": []
+	}
+}
