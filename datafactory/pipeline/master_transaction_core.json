@@ -59,10 +59,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DataFlow_Badges",
+						"referenceName": "DataFlow_Comments",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"Badges": {
+							"Comments": {
 								"filename": "comments.parquet",
 								"appname": "sharedknow",
 								"objectname": "comments"
@@ -71,6 +71,221 @@
 								"filename": "m_comments[n].parquet",
 								"appname": "m_sharedknow",
 								"objectname": "m_comments"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Linktypes",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Comments",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Linktypes",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Linktypes": {
+								"filename": "linktypes.parquet",
+								"appname": "sharedknow",
+								"objectname": "linktypes"
+							},
+							"sink2": {
+								"filename": "m_linktypes[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_linktypes"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Postlinks",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Linktypes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Postlinks",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Postlinks": {
+								"filename": "postlinks.parquet",
+								"appname": "sharedknow",
+								"objectname": "postlinks"
+							},
+							"sink2": {
+								"filename": "m_postlinks[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_postlinks"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Posts1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Postlinks",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Posts1",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Posts1": {
+								"filename": "2008-01-01/posts_200801.parquet",
+								"appname": "sharedknow",
+								"objectname": "posts"
+							},
+							"sink2": {
+								"filename": "m_2008-01-01/m_posts_200801_[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_posts"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Posts2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Posts1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Posts2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Posts2": {
+								"filename": "2009-01-01/posts_200901.parquet",
+								"appname": "sharedknow",
+								"objectname": "posts"
+							},
+							"sink2": {
+								"filename": "m_2009-01-01/m_posts_200901_[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_posts"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Posttypes",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Posts2",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Posts2",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Posts2": {
+								"filename": "2009-01-01/posts_200901.parquet",
+								"appname": "sharedknow",
+								"objectname": "posts"
+							},
+							"sink2": {
+								"filename": "m_2009-01-01/m_posts_200901_[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_posts"
 							}
 						}
 					},

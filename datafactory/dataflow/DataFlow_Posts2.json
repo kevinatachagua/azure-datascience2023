@@ -1,0 +1,82 @@
+{
+	"name": "DataFlow_Posts2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_target_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "Posts2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_master_source_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Id as string,",
+				"          AcceptedAnswerId as string,",
+				"          AnswerCount as string,",
+				"          ClosedDate as string,",
+				"          CommentCount as string,",
+				"          CommunityOwnedDate as string,",
+				"          CreationDate as string,",
+				"          FavoriteCount as string,",
+				"          LastActivityDate as string,",
+				"          LastEditDate as string,",
+				"          LastEditorUserId as string,",
+				"          OwnerUserId as string,",
+				"          ParentId as string,",
+				"          PostTypeId as string,",
+				"          Score as string,",
+				"          Tags as string,",
+				"          ViewCount as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Posts2",
+				"Posts2 derive(Id = toInteger(Id),",
+				"          AcceptedAnswerId = toInteger(AcceptedAnswerId),",
+				"          AnswerCount = toInteger(AnswerCount),",
+				"          ClosedDate = toDate(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          CommentCount = toInteger(CommentCount),",
+				"          CommunityOwnedDate = toDate(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          FavoriteCount = toInteger(FavoriteCount),",
+				"          LastActivityDate = toDate(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          LastEditDate = toDate(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          LastEditorUserId = toInteger(LastEditorUserId),",
+				"          OwnerUserId = toInteger(OwnerUserId),",
+				"          ParentId = toInteger(ParentId),",
+				"          PostTypeId = toInteger(PostTypeId),",
+				"          Score = toInteger(Score),",
+				"          Tags = toString(Tags),",
+				"          ViewCount = toInteger(ViewCount)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     filePattern:'m_posts_200901_[n].parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
+			]
+		}
+	}
+}

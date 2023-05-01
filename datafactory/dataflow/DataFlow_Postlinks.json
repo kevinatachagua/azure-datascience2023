@@ -1,0 +1,58 @@
+{
+	"name": "DataFlow_Postlinks",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_target_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "Postlinks"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_master_source_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Id as string,",
+				"          CreationDate as string,",
+				"          PostId as string,",
+				"          RelatedPostId as string,",
+				"          LinkTypeId as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Postlinks",
+				"Postlinks derive(Id = toInteger(Id),",
+				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          PostId = toInteger(PostId),",
+				"          RelatedPostId = toInteger(RelatedPostId),",
+				"          LinkTypeId = toInteger(LinkTypeId)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     filePattern:'m_postlinks[n].parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink2"
+			]
+		}
+	}
+}
