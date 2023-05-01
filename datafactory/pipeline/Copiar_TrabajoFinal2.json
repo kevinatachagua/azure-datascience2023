@@ -1,5 +1,5 @@
 {
-	"name": "Copiar_TrabajoFinal",
+	"name": "Copiar_TrabajoFinal2",
 	"properties": {
 		"activities": [
 			{
@@ -27,17 +27,23 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -46,6 +52,16 @@
 						"parameters": {
 							"appname": "TrabajoFinal",
 							"filename": "Geologia.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalparquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_geologia.parquet",
+							"appname": "trabajofinal"
 						}
 					}
 				]
@@ -82,17 +98,23 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -101,6 +123,16 @@
 						"parameters": {
 							"appname": "TrabajoFinal",
 							"filename": "Geomecanica.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalparquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_geomecanica.parquet",
+							"appname": "trabajofinal"
 						}
 					}
 				]
@@ -137,17 +169,23 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -156,6 +194,16 @@
 						"parameters": {
 							"appname": "TrabajoFinal",
 							"filename": "Oportunidades.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalparquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_oportunidades.parquet",
+							"appname": "trabajofinal"
 						}
 					}
 				]
@@ -192,17 +240,23 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -211,6 +265,16 @@
 						"parameters": {
 							"appname": "TrabajoFinal",
 							"filename": "Planeamiento.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalparquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_planeamiento.parquet",
+							"appname": "trabajofinal"
 						}
 					}
 				]
@@ -247,17 +311,23 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
@@ -266,6 +336,16 @@
 						"parameters": {
 							"appname": "TrabajoFinal",
 							"filename": "Retrasos_Operativos.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalparquet",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_retrasos_operativos.parquet",
+							"appname": "trabajofinal"
 						}
 					}
 				]
