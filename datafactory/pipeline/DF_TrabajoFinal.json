@@ -15,6 +15,184 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Geologia",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"geologia": {
+								"filename": "r_geologia.csv",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_geologia.csv",
+								"appname": "trabajofinal"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data_Geomecanica",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data_Geologia",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Geomecanica",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"geomecanica": {
+								"filename": "r_geomecanica.csv",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_geomecanica.csv",
+								"appname": "trabajofinal"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data_Oportunidades",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data_Geomecanica",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Oportunidades",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"oportunidades": {
+								"filename": "r_oportunidades.csv",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_oportunidades.csv",
+								"appname": "trabajofinal"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data_Retrasos_Operativos",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data_Oportunidades",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Retrasos_Operativos",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"retrasosoperativos": {
+								"filename": "r_retrasos_operativos.csv",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_retrasos_operativos.csv",
+								"appname": "trabajofinal"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data_Planeamiento",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "Data_Retrasos_Operativos",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Planeamiento",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"planeamiento": {
+								"filename": "r_planeamiento.csv",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_planeamiento.csv",
+								"appname": "trabajofinal"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
