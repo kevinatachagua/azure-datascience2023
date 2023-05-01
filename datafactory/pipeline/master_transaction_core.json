@@ -317,18 +317,104 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "DataFlow_Posttypes",
+						"referenceName": "DataFlow_Users",
 						"type": "DataFlowReference",
 						"datasetParameters": {
-							"Posttypes": {
-								"filename": "posttypes.parquet",
+							"Users": {
+								"filename": "users.parquet",
 								"appname": "sharedknow",
-								"objectname": "posttypes"
+								"objectname": "users"
 							},
 							"sink2": {
-								"filename": "posttypes[n].parquet",
+								"filename": "users[n].parquet",
 								"appname": "m_sharedknow",
-								"objectname": "m_posttypes"
+								"objectname": "m_users"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Votes",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Users",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Votes",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Votes": {
+								"filename": "votes.parquet",
+								"appname": "sharedknow",
+								"objectname": "votes"
+							},
+							"sink2": {
+								"filename": "votes[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_votes"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Votetypes",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Votes",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Votetypes",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Votetypes": {
+								"filename": "votetypes.parquet",
+								"appname": "sharedknow",
+								"objectname": "votetypes"
+							},
+							"sink2": {
+								"filename": "votetypes[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_votetypes"
 							}
 						}
 					},
