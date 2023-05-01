@@ -12,11 +12,11 @@
 			},
 			"appname": {
 				"type": "string",
-				"defaultValue": "badges"
+				"defaultValue": "sharedknow"
 			},
 			"objectname": {
 				"type": "string",
-				"defaultValue": "sharedknow"
+				"defaultValue": "badges"
 			}
 		},
 		"annotations": [],

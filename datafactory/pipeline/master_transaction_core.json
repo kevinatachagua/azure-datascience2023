@@ -21,13 +21,56 @@
 						"datasetParameters": {
 							"Badges": {
 								"filename": "badges.parquet",
-								"appname": "badges",
-								"objectname": "sharedknow"
+								"appname": "sharedknow",
+								"objectname": "badges"
 							},
 							"sink2": {
 								"filename": "m_badges[n].parquet",
-								"appname": "m_badges",
-								"objectname": "m_sharedknow"
+								"appname": "m_sharedknow",
+								"objectname": "m_badges"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "DF_Comments",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "DF_Badges",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Badges",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Badges": {
+								"filename": "comments.parquet",
+								"appname": "sharedknow",
+								"objectname": "comments"
+							},
+							"sink2": {
+								"filename": "m_comments[n].parquet",
+								"appname": "m_sharedknow",
+								"objectname": "m_comments"
 							}
 						}
 					},

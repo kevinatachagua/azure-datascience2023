@@ -1,5 +1,5 @@
 {
-	"name": "DataFlow_Badges",
+	"name": "DataFlow_Comments",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -9,7 +9,7 @@
 						"referenceName": "ds_target_parquet",
 						"type": "DatasetReference"
 					},
-					"name": "Badges"
+					"name": "Comments"
 				}
 			],
 			"sinks": [
@@ -29,22 +29,24 @@
 			"scriptLines": [
 				"source(output(",
 				"          Id as string,",
-				"          Name as string,",
-				"          UserId as string,",
-				"          Date as string",
+				"          CreationDate as string,",
+				"          PostId as string,",
+				"          Score as string,",
+				"          UserId as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
-				"     format: 'parquet') ~> Badges",
-				"Badges derive(Id = toInteger(Id),",
-				"          UserId = toInteger(UserId),",
-				"          Name = toString(Name),",
-				"          Date = toDate(Date, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
+				"     format: 'parquet') ~> Comments",
+				"Comments derive(Id = toInteger(Id),",
+				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          PostId = toInteger(PostId),",
+				"          Score = toInteger(Score),",
+				"          UserId = toInteger(UserId)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
-				"     filePattern:'m_badges[n].parquet',",
+				"     filePattern:'m_comments[n].parquet',",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
