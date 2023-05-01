@@ -9,7 +9,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"pipeline": {
-						"referenceName": "Copiar_TrabajoFinal",
+						"referenceName": "Copiar_TrabajoFinal2",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true

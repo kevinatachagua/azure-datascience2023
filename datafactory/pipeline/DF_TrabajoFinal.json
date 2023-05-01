@@ -15,6 +15,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Geologia",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "r_geologia.parquet",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_geologia.parquet",
+								"appname": "trabajofinal"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -42,6 +56,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Geomecanica",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "r_geomecanica.parquet",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_geomecanica.parquet",
+								"appname": "trabajofinal"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -69,6 +97,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Oportunidades",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "r_oportunidades.parquet",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_oportunidades.parquet",
+								"appname": "trabajofinal"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -96,6 +138,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Retrasos_Operativos",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "r_retrasos_operativos.parquet",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_retrasos_operativos.parquet",
+								"appname": "trabajofinal"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
@@ -123,6 +179,20 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DF_Planeamiento",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"filename": "r_planeamiento.parquet",
+								"appname": "trabajofinal"
+							},
+							"sink1": {
+								"filename": "m_planeamiento.parquet",
+								"appname": "trabajofinal"
+							}
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
