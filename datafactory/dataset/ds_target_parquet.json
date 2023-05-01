@@ -7,13 +7,16 @@
 		},
 		"parameters": {
 			"filename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "badges.parquet"
 			},
 			"appname": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "badges"
 			},
 			"objectname": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "sharedknow"
 			}
 		},
 		"annotations": [],

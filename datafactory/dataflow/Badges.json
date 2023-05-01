@@ -1,0 +1,55 @@
+{
+	"name": "Badges",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_target_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "Badges"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_master_source_parquet",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Id as string,",
+				"          Name as string,",
+				"          UserId as string,",
+				"          Date as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Badges",
+				"Badges derive(Id = toInteger(Id),",
+				"          UserId = toInteger(UserId),",
+				"          Name = toString(Name),",
+				"          Date = toDate(Date)) ~> derivedColumn1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
