@@ -289,84 +289,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_target_parquet",
-								"type": "DatasetReference"
-							},
-							"name": "RawUsers"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_master_source_parquet",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "select1"
-						},
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          Id as string,",
-						"          CreationDate as string,",
-						"          DownVotes as string,",
-						"          LastAccessDate as string,",
-						"          Reputation as string,",
-						"          UpVotes as string,",
-						"          Views as string,",
-						"          AccountId as string,",
-						"          Email as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     format: 'parquet') ~> RawUsers",
-						"RawUsers select(mapColumn(",
-						"          Id,",
-						"          DownVotes,",
-						"          LastAccessDate,",
-						"          Reputation,",
-						"          UpVotes,",
-						"          Views,",
-						"          AccountId",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 derive(Valoracion = toInteger(Reputation) + 100) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     format: 'parquet',",
-						"     filePattern:'m_users[n].parquet',",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DataFlow_Badges')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -414,7 +336,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_badges[n].parquet',",
+						"     filePattern:'m_badges.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -478,7 +400,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_comments[n].parquet',",
+						"     filePattern:'m_comments.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -536,7 +458,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_linktypes[n].parquet',",
+						"     filePattern:'m_linktypes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -600,7 +522,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_postlinks[n].parquet',",
+						"     filePattern:'m_postlinks.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -688,7 +610,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_posts_200801_[n].parquet',",
+						"     filePattern:'m_posts_200801.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -776,7 +698,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_posts_200901_[n].parquet',",
+						"     filePattern:'m_posts_200901.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -834,7 +756,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_posttypes[n].parquet',",
+						"     filePattern:'m_posttypes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -906,7 +828,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_users[n].parquet',",
+						"     filePattern:'m_users.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -972,7 +894,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_votes[n].parquet',",
+						"     filePattern:'m_votes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -1030,12 +952,90 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_votetypes[n].parquet',",
+						"     filePattern:'m_votetypes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "RawUsers"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          CreationDate as string,",
+						"          DownVotes as string,",
+						"          LastAccessDate as string,",
+						"          Reputation as string,",
+						"          UpVotes as string,",
+						"          Views as string,",
+						"          AccountId as string,",
+						"          Email as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> RawUsers",
+						"RawUsers select(mapColumn(",
+						"          Id,",
+						"          DownVotes,",
+						"          LastAccessDate,",
+						"          Reputation,",
+						"          UpVotes,",
+						"          Views,",
+						"          AccountId",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 derive(Valoracion = toInteger(Reputation) + 100) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_users[n].parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
 					]
 				}
 			},
@@ -1074,11 +1074,6 @@
 										"objectname": "users"
 									},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {
-									"sink1": {
-										"schemaLinkedService": {}
-									}
 								}
 							},
 							"staging": {},

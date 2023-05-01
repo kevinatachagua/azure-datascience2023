@@ -33,6 +33,40 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRaw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute_CopiaRaw",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "raw_know_core",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "01_raw_source"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/raw_know_core')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/business_student_overview')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -97,11 +131,6 @@
 										"objectname": "users"
 									},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {
-									"sink1": {
-										"schemaLinkedService": {}
-									}
 								}
 							},
 							"staging": {},
@@ -162,14 +191,9 @@
 										"objectname": "badges"
 									},
 									"sink2": {
-										"filename": "m_badges[n].parquet",
+										"filename": "m_badges.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_badges"
-									}
-								},
-								"linkedServiceParameters": {
-									"sink2": {
-										"schemaLinkedService": {}
 									}
 								}
 							},
@@ -212,12 +236,11 @@
 										"objectname": "comments"
 									},
 									"sink2": {
-										"filename": "m_comments[n].parquet",
+										"filename": "m_comments.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_comments"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -258,12 +281,11 @@
 										"objectname": "linktypes"
 									},
 									"sink2": {
-										"filename": "m_linktypes[n].parquet",
+										"filename": "m_linktypes.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_linktypes"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -304,12 +326,11 @@
 										"objectname": "postlinks"
 									},
 									"sink2": {
-										"filename": "m_postlinks[n].parquet",
+										"filename": "m_postlinks.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_postlinks"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -350,12 +371,11 @@
 										"objectname": "posts"
 									},
 									"sink2": {
-										"filename": "m_2008-01-01/m_posts_200801_[n].parquet",
+										"filename": "m_2008-01-01/m_posts_200801.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_posts"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -396,12 +416,11 @@
 										"objectname": "posts"
 									},
 									"sink2": {
-										"filename": "m_2009-01-01/m_posts_200901_[n].parquet",
+										"filename": "m_2009-01-01/m_posts_200901.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_posts"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -442,12 +461,11 @@
 										"objectname": "posttypes"
 									},
 									"sink2": {
-										"filename": "posttypes[n].parquet",
+										"filename": "posttypes.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_posttypes"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -488,12 +506,11 @@
 										"objectname": "users"
 									},
 									"sink2": {
-										"filename": "users[n].parquet",
+										"filename": "users.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_users"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -534,12 +551,11 @@
 										"objectname": "votes"
 									},
 									"sink2": {
-										"filename": "votes[n].parquet",
+										"filename": "votes.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_votes"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -580,12 +596,11 @@
 										"objectname": "votetypes"
 									},
 									"sink2": {
-										"filename": "votetypes[n].parquet",
+										"filename": "votetypes.parquet",
 										"appname": "m_sharedknow",
 										"objectname": "m_votetypes"
 									}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -1596,118 +1611,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ds_target_parquet",
-								"type": "DatasetReference"
-							},
-							"name": "RawUsers"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ds_master_source_parquet",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "select1"
-						},
-						{
-							"name": "derivedColumn1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          Id as string,",
-						"          CreationDate as string,",
-						"          DownVotes as string,",
-						"          LastAccessDate as string,",
-						"          Reputation as string,",
-						"          UpVotes as string,",
-						"          Views as string,",
-						"          AccountId as string,",
-						"          Email as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false,",
-						"     format: 'parquet') ~> RawUsers",
-						"RawUsers select(mapColumn(",
-						"          Id,",
-						"          DownVotes,",
-						"          LastAccessDate,",
-						"          Reputation,",
-						"          UpVotes,",
-						"          Views,",
-						"          AccountId",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 derive(Valoracion = toInteger(Reputation) + 100) ~> derivedColumn1",
-						"derivedColumn1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     format: 'parquet',",
-						"     filePattern:'m_users[n].parquet',",
-						"     umask: 0022,",
-						"     preCommands: [],",
-						"     postCommands: [],",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRaw')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Execute_CopiaRaw",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "raw_know_core",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "01_raw_source"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/raw_know_core')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DataFlow_Badges')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -1755,7 +1658,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_badges[n].parquet',",
+						"     filePattern:'m_badges.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -1819,7 +1722,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_comments[n].parquet',",
+						"     filePattern:'m_comments.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -1877,7 +1780,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_linktypes[n].parquet',",
+						"     filePattern:'m_linktypes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -1941,7 +1844,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_postlinks[n].parquet',",
+						"     filePattern:'m_postlinks.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2029,7 +1932,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_posts_200801_[n].parquet',",
+						"     filePattern:'m_posts_200801.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2117,7 +2020,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_posts_200901_[n].parquet',",
+						"     filePattern:'m_posts_200901.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2175,7 +2078,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_posttypes[n].parquet',",
+						"     filePattern:'m_posttypes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2247,7 +2150,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_users[n].parquet',",
+						"     filePattern:'m_users.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2313,7 +2216,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_votes[n].parquet',",
+						"     filePattern:'m_votes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2371,7 +2274,7 @@
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
-						"     filePattern:'m_votetypes[n].parquet',",
+						"     filePattern:'m_votetypes.parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2383,6 +2286,118 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
 				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "RawUsers"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          CreationDate as string,",
+						"          DownVotes as string,",
+						"          LastAccessDate as string,",
+						"          Reputation as string,",
+						"          UpVotes as string,",
+						"          Views as string,",
+						"          AccountId as string,",
+						"          Email as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> RawUsers",
+						"RawUsers select(mapColumn(",
+						"          Id,",
+						"          DownVotes,",
+						"          LastAccessDate,",
+						"          Reputation,",
+						"          UpVotes,",
+						"          Views,",
+						"          AccountId",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 derive(Valoracion = toInteger(Reputation) + 100) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_users[n].parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaMaster')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute _CopiaMaster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "master_transaction_core",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "02_master_models"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/master_transaction_core')]"
 			]
 		}
 	]
