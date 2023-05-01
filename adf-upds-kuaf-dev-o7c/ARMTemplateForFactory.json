@@ -33,6 +33,125 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Copiar_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_Geologia",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Geologia.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "geologia.parquet",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_trabajofinal')]",
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaMaster')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute _CopiaMaster",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "master_transaction_core",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "02_master_models"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/master_transaction_core')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRaw')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1517,6 +1636,55 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_source_trabajofinal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"appname": {
+						"type": "string",
+						"defaultValue": "TrabajoFinal"
+					},
+					"filename": {
+						"type": "string",
+						"defaultValue": "Geologia2.csv"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().appname",
+							"type": "Expression"
+						}
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "\"Id\"|\"Name\"|\"UserId\"|\"Date\"",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileLinkedService')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_target_parquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1549,6 +1717,48 @@
 							"type": "Expression"
 						},
 						"folderPath": "data",
+						"fileSystem": "raw"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_target_trabajofinal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string",
+						"defaultValue": "geologia.parquet"
+					},
+					"appname": {
+						"type": "string",
+						"defaultValue": "trabajofinal"
+					}
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().appname",
+							"type": "Expression"
+						},
 						"fileSystem": "raw"
 					},
 					"compressionCodec": "snappy"
@@ -2364,40 +2574,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
 				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaMaster')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Execute _CopiaMaster",
-						"type": "ExecutePipeline",
-						"dependsOn": [],
-						"userProperties": [],
-						"typeProperties": {
-							"pipeline": {
-								"referenceName": "master_transaction_core",
-								"type": "PipelineReference"
-							},
-							"waitOnCompletion": true,
-							"parameters": {}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "02_master_models"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/master_transaction_core')]"
 			]
 		}
 	]
