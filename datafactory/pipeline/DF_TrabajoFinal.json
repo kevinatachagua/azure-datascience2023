@@ -15,20 +15,6 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"dataflow": {
-						"referenceName": "1-DataFlow_Geologia",
-						"type": "DataFlowReference",
-						"datasetParameters": {
-							"geologia": {
-								"filename": "r_geologia.csv",
-								"appname": "trabajofinal"
-							},
-							"sinkGeologia": {
-								"filename": "m_geologia.csv",
-								"appname": "trabajofinal"
-							}
-						}
-					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
