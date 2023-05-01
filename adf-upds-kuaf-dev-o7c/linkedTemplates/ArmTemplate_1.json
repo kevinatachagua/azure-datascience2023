@@ -13,6 +13,418 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DataFlow_Posts1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "Posts1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          AcceptedAnswerId as string,",
+						"          AnswerCount as string,",
+						"          ClosedDate as string,",
+						"          CommentCount as string,",
+						"          CommunityOwnedDate as string,",
+						"          CreationDate as string,",
+						"          FavoriteCount as string,",
+						"          LastActivityDate as string,",
+						"          LastEditDate as string,",
+						"          LastEditorUserId as string,",
+						"          OwnerUserId as string,",
+						"          ParentId as string,",
+						"          PostTypeId as string,",
+						"          Score as string,",
+						"          Tags as string,",
+						"          ViewCount as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> Posts1",
+						"Posts1 derive(Id = toInteger(Id),",
+						"          AcceptedAnswerId = toInteger(AcceptedAnswerId),",
+						"          AnswerCount = toInteger(AnswerCount),",
+						"          ClosedDate = toDate(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CommentCount = toInteger(CommentCount),",
+						"          CommunityOwnedDate = toDate(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          FavoriteCount = toInteger(FavoriteCount),",
+						"          LastActivityDate = toDate(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditDate = toDate(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditorUserId = toInteger(LastEditorUserId),",
+						"          OwnerUserId = toInteger(OwnerUserId),",
+						"          ParentId = toInteger(ParentId),",
+						"          PostTypeId = toInteger(PostTypeId),",
+						"          Score = toInteger(Score),",
+						"          Tags = toString(Tags),",
+						"          ViewCount = toInteger(ViewCount)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_posts_200801.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlow_Posts2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "Posts2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          AcceptedAnswerId as string,",
+						"          AnswerCount as string,",
+						"          ClosedDate as string,",
+						"          CommentCount as string,",
+						"          CommunityOwnedDate as string,",
+						"          CreationDate as string,",
+						"          FavoriteCount as string,",
+						"          LastActivityDate as string,",
+						"          LastEditDate as string,",
+						"          LastEditorUserId as string,",
+						"          OwnerUserId as string,",
+						"          ParentId as string,",
+						"          PostTypeId as string,",
+						"          Score as string,",
+						"          Tags as string,",
+						"          ViewCount as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> Posts2",
+						"Posts2 derive(Id = toInteger(Id),",
+						"          AcceptedAnswerId = toInteger(AcceptedAnswerId),",
+						"          AnswerCount = toInteger(AnswerCount),",
+						"          ClosedDate = toDate(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CommentCount = toInteger(CommentCount),",
+						"          CommunityOwnedDate = toDate(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          FavoriteCount = toInteger(FavoriteCount),",
+						"          LastActivityDate = toDate(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditDate = toDate(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditorUserId = toInteger(LastEditorUserId),",
+						"          OwnerUserId = toInteger(OwnerUserId),",
+						"          ParentId = toInteger(ParentId),",
+						"          PostTypeId = toInteger(PostTypeId),",
+						"          Score = toInteger(Score),",
+						"          Tags = toString(Tags),",
+						"          ViewCount = toInteger(ViewCount)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_posts_200901.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlow_Posttypes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "Posttypes"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          Type as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> Posttypes",
+						"Posttypes derive(Id = toInteger(Id),",
+						"          Type = toString(Type)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_posttypes.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlow_Users')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "Users"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          CreationDate as string,",
+						"          DownVotes as string,",
+						"          LastAccessDate as string,",
+						"          Reputation as string,",
+						"          UpVotes as string,",
+						"          Views as string,",
+						"          AccountId as string,",
+						"          Email as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> Users",
+						"Users derive(Id = toInteger(Id),",
+						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          DownVotes = toInteger(DownVotes),",
+						"          LastAccessDate = toDate(LastAccessDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          Reputation = toInteger(Reputation),",
+						"          UpVotes = toInteger(UpVotes),",
+						"          Views = toInteger(Views),",
+						"          AccountId = toInteger(AccountId),",
+						"          Email = toString(Email)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_users.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlow_Votes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "Votes"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          PostId as string,",
+						"          UserId as string,",
+						"          BountyAmount as string,",
+						"          VoteTypeId as string,",
+						"          CreationDate as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> Votes",
+						"Votes derive(Id = toInteger(Id),",
+						"          PostId = toInteger(PostId),",
+						"          UserId = toInteger(UserId),",
+						"          BountyAmount = toInteger(BountyAmount),",
+						"          VoteTypeId = toInteger(VoteTypeId),",
+						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_votes.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataFlow_Votetypes')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "Votetypes"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_source_parquet",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Id as string,",
+						"          Name as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> Votetypes",
+						"Votetypes derive(Id = toInteger(Id),",
+						"          Name = toString(Name)) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     format: 'parquet',",
+						"     filePattern:'m_votetypes.parquet',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink2"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -118,12 +530,14 @@
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "DelimitedTextSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings"
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -148,14 +562,532 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinal",
+								"referenceName": "ds_target_trabajofinalexcel",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "geologia.parquet",
+									"filename": "r_geologia.csv",
 									"appname": "trabajofinal"
 								}
 							}
 						]
+					},
+					{
+						"name": "Copy_Geomecanica",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Geologia",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Geomecanica.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_geomecanica.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Oportunidades",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Geomecanica",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Oportunidades.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_oportunidades.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Planeamiento",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Oportunidades",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Planeamiento.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_planeamiento.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Retrasos_Operativos",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Planeamiento",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Retrasos_Operativos.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_retrasos_operativos.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
+				},
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data_Geologia",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Geologia",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"geologia": {
+										"filename": "r_geologia.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_geologia.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Geomecanica",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Geologia",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Geomecanica",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"geomecanica": {
+										"filename": "r_geomecanica.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_geomecanica.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Oportunidades",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Geomecanica",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Oportunidades",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"oportunidades": {
+										"filename": "r_oportunidades.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_oportunidades.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Retrasos_Operativos",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Oportunidades",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Retrasos_Operativos",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"retrasosoperativos": {
+										"filename": "r_retrasos_operativos.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_retrasos_operativos.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Planeamiento",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Retrasos_Operativos",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Planeamiento",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"planeamiento": {
+										"filename": "r_planeamiento.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_planeamiento.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -694,7 +1626,14 @@
 				"annotations": [],
 				"lastPublishTime": "2023-04-14T00:52:17Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Posts1')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Posts2')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Posttypes')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Users')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Votes')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Votetypes')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/raw_know_core')]",
@@ -1509,6 +2448,40 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/raw_know_core')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRawTF')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute_CopiaRawTF",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Copiar_TrabajoFinal",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Copiar_TrabajoFinal')]"
 			]
 		}
 	]

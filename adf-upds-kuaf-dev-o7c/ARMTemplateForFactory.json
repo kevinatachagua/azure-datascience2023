@@ -63,12 +63,14 @@
 								}
 							},
 							"sink": {
-								"type": "ParquetSink",
+								"type": "DelimitedTextSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "ParquetWriteSettings"
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -93,10 +95,302 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinal",
+								"referenceName": "ds_target_trabajofinalexcel",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "geologia.parquet",
+									"filename": "r_geologia.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Geomecanica",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Geologia",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Geomecanica.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_geomecanica.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Oportunidades",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Geomecanica",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Oportunidades.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_oportunidades.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Planeamiento",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Oportunidades",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Planeamiento.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_planeamiento.csv",
+									"appname": "trabajofinal"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Retrasos_Operativos",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Planeamiento",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_trabajofinal",
+								"type": "DatasetReference",
+								"parameters": {
+									"appname": "TrabajoFinal",
+									"filename": "Retrasos_Operativos.csv"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "r_retrasos_operativos.csv",
 									"appname": "trabajofinal"
 								}
 							}
@@ -114,7 +408,239 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_trabajofinal')]",
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinal')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_TrabajoFinal')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data_Geologia",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Geologia",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"geologia": {
+										"filename": "r_geologia.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_geologia.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Geomecanica",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Geologia",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Geomecanica",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"geomecanica": {
+										"filename": "r_geomecanica.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_geomecanica.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Oportunidades",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Geomecanica",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Oportunidades",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"oportunidades": {
+										"filename": "r_oportunidades.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_oportunidades.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Retrasos_Operativos",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Oportunidades",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Retrasos_Operativos",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"retrasosoperativos": {
+										"filename": "r_retrasos_operativos.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_retrasos_operativos.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data_Planeamiento",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data_Retrasos_Operativos",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DF_Planeamiento",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"planeamiento": {
+										"filename": "r_planeamiento.csv",
+										"appname": "trabajofinal"
+									},
+									"sink1": {
+										"filename": "m_planeamiento.csv",
+										"appname": "trabajofinal"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DF_Geologia')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_Geomecanica')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_Oportunidades')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_Retrasos_Operativos')]",
+				"[concat(variables('factoryId'), '/dataflows/DF_Planeamiento')]"
 			]
 		},
 		{
@@ -183,6 +709,40 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/raw_know_core')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRawTF')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute_CopiaRawTF",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "Copiar_TrabajoFinal",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Copiar_TrabajoFinal')]"
 			]
 		},
 		{
@@ -1587,6 +2147,49 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ds_master_trabajofinal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLSLinkedService",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					},
+					"appname": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().appname",
+							"type": "Expression"
+						},
+						"fileSystem": "master"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/ds_source_csv')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1668,10 +2271,10 @@
 							"type": "Expression"
 						}
 					},
-					"columnDelimiter": ",",
+					"columnDelimiter": ";",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"quoteChar": ""
 				},
 				"schema": [
 					{
@@ -1728,7 +2331,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_target_trabajofinal')]",
+			"name": "[concat(parameters('factoryName'), '/ds_target_trabajofinalexcel')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1739,7 +2342,7 @@
 				"parameters": {
 					"filename": {
 						"type": "string",
-						"defaultValue": "geologia.parquet"
+						"defaultValue": "r_geologia.csv"
 					},
 					"appname": {
 						"type": "string",
@@ -1747,7 +2350,7 @@
 					}
 				},
 				"annotations": [],
-				"type": "Parquet",
+				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
@@ -1761,7 +2364,10 @@
 						},
 						"fileSystem": "raw"
 					},
-					"compressionCodec": "snappy"
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
 				},
 				"schema": []
 			},
@@ -1819,6 +2425,356 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Geologia')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference"
+							},
+							"name": "geologia"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_trabajofinal",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Estimacion as string,",
+						"          Estatus as string,",
+						"          Nombre_de_Estructura as string,",
+						"          Full_Year_Budget as double,",
+						"          Budget_YTD_April as double,",
+						"          Actual_YTD_April as double,",
+						"          Detalle as string,",
+						"          Observacion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> geologia",
+						"geologia derive(Estimacion = toString(Estimacion),",
+						"          Estatus = toString(Estatus),",
+						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
+						"          Budget_YTD_April = toDouble(Budget_YTD_April),",
+						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
+						"          Detalle = toString(Detalle),",
+						"          Observacion = toString(Observacion),",
+						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
+						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     filePattern:'m_geologia.csv',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Geomecanica')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference"
+							},
+							"name": "geomecanica"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_trabajofinal",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Estimacion as string,",
+						"          Estatus as string,",
+						"          Nombre_de_Estructura as string,",
+						"          Full_Year_Budget as double,",
+						"          Budget_YTD_April as double,",
+						"          Actual_YTD_April as double,",
+						"          Detalle as string,",
+						"          Observacion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> geomecanica",
+						"geomecanica derive(Estimacion = toString(Estimacion),",
+						"          Estatus = toString(Estatus),",
+						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
+						"          Budget_YTD_April = toDouble(Budget_YTD_April),",
+						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
+						"          Detalle = toString(Detalle),",
+						"          Observacion = toString(Observacion),",
+						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
+						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     filePattern:'m_geomecanica.csv',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Oportunidades')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference"
+							},
+							"name": "oportunidades"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_trabajofinal",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Estimacion as string,",
+						"          Estatus as string,",
+						"          Nombre_de_Estructura as string,",
+						"          Full_Year_Budget as double,",
+						"          Budget_YTD_April as double,",
+						"          Actual_YTD_April as double,",
+						"          Detalle as string,",
+						"          Observacion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> oportunidades",
+						"oportunidades derive(Estimacion = toString(Estimacion),",
+						"          Estatus = toString(Estatus),",
+						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
+						"          Budget_YTD_April = toDouble(Budget_YTD_April),",
+						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
+						"          Detalle = toString(Detalle),",
+						"          Observacion = toString(Observacion),",
+						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
+						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     filePattern:'m_oportunidades.csv',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Planeamiento')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference"
+							},
+							"name": "planeamiento"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_trabajofinal",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Estimacion as string,",
+						"          Estatus as string,",
+						"          Nombre_de_Estructura as string,",
+						"          Full_Year_Budget as double,",
+						"          Budget_YTD_April as double,",
+						"          Actual_YTD_April as double,",
+						"          Detalle as string,",
+						"          Observacion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> planeamiento",
+						"planeamiento derive(Estimacion = toString(Estimacion),",
+						"          Estatus = toString(Estatus),",
+						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
+						"          Budget_YTD_April = toDouble(Budget_YTD_April),",
+						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
+						"          Detalle = toString(Detalle),",
+						"          Observacion = toString(Observacion),",
+						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
+						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     filePattern:'m_planeamiento.csv',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DF_Retrasos_Operativos')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ds_target_trabajofinalexcel",
+								"type": "DatasetReference"
+							},
+							"name": "retrasosoperativos"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ds_master_trabajofinal",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Estimacion as string,",
+						"          Estatus as string,",
+						"          Nombre_de_Estructura as string,",
+						"          Full_Year_Budget as double,",
+						"          Budget_YTD_April as double,",
+						"          Actual_YTD_April as double,",
+						"          Detalle as string,",
+						"          Observacion as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> retrasosoperativos",
+						"retrasosoperativos derive(Estimacion = toString(Estimacion),",
+						"          Estatus = toString(Estatus),",
+						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
+						"          Budget_YTD_April = toDouble(Budget_YTD_April),",
+						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
+						"          Detalle = toString(Detalle),",
+						"          Observacion = toString(Observacion),",
+						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
+						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     filePattern:'m_retrasos_operativos.csv',",
+						"     umask: 0022,",
+						"     preCommands: [],",
+						"     postCommands: [],",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DataFlow_Badges')]",
