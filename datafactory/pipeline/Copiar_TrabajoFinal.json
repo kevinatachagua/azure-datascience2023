@@ -51,7 +51,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"appname": "TrabajoFinal",
-							"filename": "Geologia2.csv"
+							"filename": "Geologia.csv"
 						}
 					}
 				],
@@ -68,7 +68,7 @@
 			}
 		],
 		"folder": {
-			"name": "01_raw_source"
+			"name": "TrabajoFinal"
 		},
 		"annotations": []
 	}
