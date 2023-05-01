@@ -27,12 +27,14 @@
 						}
 					},
 					"sink": {
-						"type": "ParquetSink",
+						"type": "DelimitedTextSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
 						}
 					},
 					"enableStaging": false,
@@ -57,10 +59,302 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_target_trabajofinal",
+						"referenceName": "ds_target_trabajofinalexcel",
 						"type": "DatasetReference",
 						"parameters": {
-							"filename": "geologia.parquet",
+							"filename": "r_geologia.csv",
+							"appname": "trabajofinal"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy_Geomecanica",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy_Geologia",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_trabajofinal",
+						"type": "DatasetReference",
+						"parameters": {
+							"appname": "TrabajoFinal",
+							"filename": "Geomecanica.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalexcel",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_geomecanica.csv",
+							"appname": "trabajofinal"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy_Oportunidades",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy_Geomecanica",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_trabajofinal",
+						"type": "DatasetReference",
+						"parameters": {
+							"appname": "TrabajoFinal",
+							"filename": "Oportunidades.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalexcel",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_oportunidades.csv",
+							"appname": "trabajofinal"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy_Planeamiento",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy_Oportunidades",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_trabajofinal",
+						"type": "DatasetReference",
+						"parameters": {
+							"appname": "TrabajoFinal",
+							"filename": "Planeamiento.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalexcel",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_planeamiento.csv",
+							"appname": "trabajofinal"
+						}
+					}
+				]
+			},
+			{
+				"name": "Copy_Retrasos_Operativos",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Copy_Planeamiento",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "FileServerReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_source_trabajofinal",
+						"type": "DatasetReference",
+						"parameters": {
+							"appname": "TrabajoFinal",
+							"filename": "Retrasos_Operativos.csv"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_target_trabajofinalexcel",
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": "r_retrasos_operativos.csv",
 							"appname": "trabajofinal"
 						}
 					}

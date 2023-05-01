@@ -1,0 +1,52 @@
+{
+	"name": "DataFlow_Geomecanica",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_target_trabajofinalexcel",
+						"type": "DatasetReference"
+					},
+					"name": "geomecanica"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_master_trabajofinal",
+						"type": "DatasetReference"
+					},
+					"name": "sinkGeomecanica"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumngeomecanica"
+				}
+			],
+			"scriptLines": [
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> geomecanica",
+				"geomecanica derive(Estimacion = toString(Estimacion),",
+				"          Estatus = toString(Estatus),",
+				"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+				"          Full_Year_Budget = toInteger(Full_Year_Budget),",
+				"          Budget_YTD_April = toInteger(Budget_YTD_April),",
+				"          Actual_YTD_April = toInteger(Actual_YTD_April),",
+				"          Detalle = toString(Detalle),",
+				"          Observacion = toString(Observacion)) ~> derivedColumngeomecanica",
+				"derivedColumngeomecanica sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     filePattern:'m_geomecanica.csv',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkGeomecanica"
+			]
+		}
+	}
+}

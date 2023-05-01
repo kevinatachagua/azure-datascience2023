@@ -1,0 +1,62 @@
+{
+	"name": "DataFlow_Geologia",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_target_trabajofinalexcel",
+						"type": "DatasetReference"
+					},
+					"name": "geologia"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ds_master_trabajofinal",
+						"type": "DatasetReference"
+					},
+					"name": "sinkGeologia"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumngeologia"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Estimacion as string,",
+				"          Estatus as string,",
+				"          Nombre_de_Estructura as string,",
+				"          Full_Year_Budget as integer,",
+				"          Budget_YTD_April as integer,",
+				"          Actual_YTD_April as short,",
+				"          Detalle as string,",
+				"          Observacion as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> geologia",
+				"geologia derive(Estimacion = toString(Estimacion),",
+				"          Estatus = toString(Estatus),",
+				"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
+				"          Full_Year_Budget = toInteger(Full_Year_Budget),",
+				"          Budget_YTD_April = toInteger(Budget_YTD_April),",
+				"          Actual_YTD_April = toInteger(Actual_YTD_April),",
+				"          Detalle = toString(Detalle),",
+				"          Observacion = toString(Observacion)) ~> derivedColumngeologia",
+				"derivedColumngeologia sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     filePattern:'m_geologia.csv',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sinkGeologia"
+			]
+		}
+	}
+}

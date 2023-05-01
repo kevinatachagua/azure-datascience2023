@@ -1,0 +1,24 @@
+{
+	"name": "Ejecutar_CopiaRawTF",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute_CopiaRawTF",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "Copiar_TrabajoFinal",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "TrabajoFinal"
+		},
+		"annotations": []
+	}
+}

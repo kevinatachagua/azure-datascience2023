@@ -1,0 +1,45 @@
+{
+	"name": "DF_TrabajoFinal",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data_Geologia",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "DataFlow_Geologia",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"geologia": {
+								"filename": "r_geologia.csv",
+								"appname": "trabajofinal"
+							},
+							"sinkGeologia": {
+								"filename": "m_geologia.csv",
+								"appname": "trabajofinal"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			}
+		],
+		"folder": {
+			"name": "TrabajoFinal"
+		},
+		"annotations": []
+	}
+}
