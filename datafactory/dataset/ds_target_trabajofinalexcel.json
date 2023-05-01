@@ -7,10 +7,12 @@
 		},
 		"parameters": {
 			"filename": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "r_geologia.csv"
 			},
 			"appname": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "trabajofinal"
 			}
 		},
 		"annotations": [],
