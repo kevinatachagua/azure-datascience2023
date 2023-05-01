@@ -3,14 +3,39 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Demo",
-				"description": "Demo",
-				"type": "SetVariable",
+				"name": "DF_Badges",
+				"type": "ExecuteDataFlow",
 				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "demo",
-					"value": "demo"
+					"dataflow": {
+						"referenceName": "DataFlow_Badges",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"Badges": {
+								"filename": "badges.parquet",
+								"appname": "badges",
+								"objectname": "sharedknow"
+							},
+							"sink2": {
+								"filename": "m_badges[n].parquet",
+								"appname": "m_badges",
+								"objectname": "m_sharedknow"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
 				}
 			}
 		],

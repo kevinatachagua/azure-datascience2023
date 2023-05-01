@@ -1,5 +1,5 @@
 {
-	"name": "Badges",
+	"name": "DataFlow_Badges",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -18,7 +18,7 @@
 						"referenceName": "ds_master_source_parquet",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -44,11 +44,12 @@
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
+				"     filePattern:'m_badges[n].parquet',",
 				"     umask: 0022,",
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> sink1"
+				"     skipDuplicateMapOutputs: true) ~> sink2"
 			]
 		}
 	}
