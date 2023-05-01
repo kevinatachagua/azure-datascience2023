@@ -8,7 +8,7 @@
 		"parameters": {
 			"filename": {
 				"type": "string",
-				"defaultValue": "m_badges1.parquet"
+				"defaultValue": "m_comments1.parquet"
 			},
 			"appname": {
 				"type": "string",
@@ -16,7 +16,7 @@
 			},
 			"objectname": {
 				"type": "string",
-				"defaultValue": "m_badges"
+				"defaultValue": "m_comments"
 			}
 		},
 		"annotations": [],
