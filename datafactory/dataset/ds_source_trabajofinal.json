@@ -1,0 +1,44 @@
+{
+	"name": "ds_source_trabajofinal",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileLinkedService",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"appname": {
+				"type": "string",
+				"defaultValue": "TrabajoFinal"
+			},
+			"filename": {
+				"type": "string",
+				"defaultValue": "Geologia2.csv"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().appname",
+					"type": "Expression"
+				}
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "\"Id\"|\"Name\"|\"UserId\"|\"Date\"",
+				"type": "String"
+			}
+		]
+	}
+}
