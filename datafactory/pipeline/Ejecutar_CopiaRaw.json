@@ -1,0 +1,24 @@
+{
+	"name": "Ejecutar_CopiaRaw",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute_CopiaRaw",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "raw_know_core",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "01_raw_source"
+		},
+		"annotations": []
+	}
+}
