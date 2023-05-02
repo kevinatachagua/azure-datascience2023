@@ -33,7 +33,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/Copiar_TrabajoFinal')]",
+			"name": "[concat(parameters('factoryName'), '/Copiar_TrabajoFinal2')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -63,14 +63,12 @@
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -95,10 +93,10 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "r_geologia.csv",
+									"filename": "r_geologia.parquet",
 									"appname": "trabajofinal"
 								}
 							}
@@ -136,14 +134,12 @@
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -168,10 +164,10 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "r_geomecanica.csv",
+									"filename": "r_geomecanica.parquet",
 									"appname": "trabajofinal"
 								}
 							}
@@ -209,14 +205,12 @@
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -241,10 +235,10 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "r_oportunidades.csv",
+									"filename": "r_oportunidades.parquet",
 									"appname": "trabajofinal"
 								}
 							}
@@ -282,14 +276,12 @@
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -314,10 +306,10 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "r_planeamiento.csv",
+									"filename": "r_planeamiento.parquet",
 									"appname": "trabajofinal"
 								}
 							}
@@ -355,14 +347,12 @@
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false,
@@ -387,10 +377,10 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference",
 								"parameters": {
-									"filename": "r_retrasos_operativos.csv",
+									"filename": "r_retrasos_operativos.parquet",
 									"appname": "trabajofinal"
 								}
 							}
@@ -408,7 +398,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_source_trabajofinal')]",
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalparquet')]"
 			]
 		},
 		{
@@ -435,12 +425,12 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"geologia": {
-										"filename": "r_geologia.csv",
+									"source1": {
+										"filename": "r_geologia.parquet",
 										"appname": "trabajofinal"
 									},
 									"sink1": {
-										"filename": "m_geologia.csv",
+										"filename": "m_geologia.parquet",
 										"appname": "trabajofinal"
 									}
 								}
@@ -478,12 +468,12 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"geomecanica": {
-										"filename": "r_geomecanica.csv",
+									"source1": {
+										"filename": "r_geomecanica.parquet",
 										"appname": "trabajofinal"
 									},
 									"sink1": {
-										"filename": "m_geomecanica.csv",
+										"filename": "m_geomecanica.parquet",
 										"appname": "trabajofinal"
 									}
 								}
@@ -521,12 +511,12 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"oportunidades": {
-										"filename": "r_oportunidades.csv",
+									"source1": {
+										"filename": "r_oportunidades.parquet",
 										"appname": "trabajofinal"
 									},
 									"sink1": {
-										"filename": "m_oportunidades.csv",
+										"filename": "m_oportunidades.parquet",
 										"appname": "trabajofinal"
 									}
 								}
@@ -564,12 +554,12 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"retrasosoperativos": {
-										"filename": "r_retrasos_operativos.csv",
+									"source1": {
+										"filename": "r_retrasos_operativos.parquet",
 										"appname": "trabajofinal"
 									},
 									"sink1": {
-										"filename": "m_retrasos_operativos.csv",
+										"filename": "m_retrasos_operativos.parquet",
 										"appname": "trabajofinal"
 									}
 								}
@@ -607,12 +597,12 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"planeamiento": {
-										"filename": "r_planeamiento.csv",
+									"source1": {
+										"filename": "r_planeamiento.parquet",
 										"appname": "trabajofinal"
 									},
 									"sink1": {
-										"filename": "m_planeamiento.csv",
+										"filename": "m_planeamiento.parquet",
 										"appname": "trabajofinal"
 									}
 								}
@@ -712,7 +702,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRawTF')]",
+			"name": "[concat(parameters('factoryName'), '/Ejecutar_CopiaRaw_Master')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -724,7 +714,28 @@
 						"userProperties": [],
 						"typeProperties": {
 							"pipeline": {
-								"referenceName": "Copiar_TrabajoFinal",
+								"referenceName": "Copiar_TrabajoFinal2",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Execute_CopiaMasterTF",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute_CopiaRawTF",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "DF_TrabajoFinal",
 								"type": "PipelineReference"
 							},
 							"waitOnCompletion": true,
@@ -742,7 +753,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Copiar_TrabajoFinal')]"
+				"[concat(variables('factoryId'), '/pipelines/Copiar_TrabajoFinal2')]",
+				"[concat(variables('factoryId'), '/pipelines/DF_TrabajoFinal')]"
 			]
 		},
 		{
@@ -2147,7 +2159,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_master_trabajofinal')]",
+			"name": "[concat(parameters('factoryName'), '/ds_master_trabajofinalparquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2164,7 +2176,7 @@
 					}
 				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
@@ -2178,12 +2190,26 @@
 						},
 						"fileSystem": "master"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"compressionCodec": "snappy"
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Id",
+						"type": "INT32"
+					},
+					{
+						"name": "Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "UserId",
+						"type": "INT32"
+					},
+					{
+						"name": "Date",
+						"type": "DATE"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
@@ -2331,7 +2357,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/ds_target_trabajofinalexcel')]",
+			"name": "[concat(parameters('factoryName'), '/ds_target_trabajofinalparquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -2341,16 +2367,14 @@
 				},
 				"parameters": {
 					"filename": {
-						"type": "string",
-						"defaultValue": "r_geologia.csv"
+						"type": "string"
 					},
 					"appname": {
-						"type": "string",
-						"defaultValue": "trabajofinal"
+						"type": "string"
 					}
 				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
@@ -2364,12 +2388,26 @@
 						},
 						"fileSystem": "raw"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"compressionCodec": "snappy"
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Id",
+						"type": "UTF8"
+					},
+					{
+						"name": "Name",
+						"type": "UTF8"
+					},
+					{
+						"name": "UserId",
+						"type": "UTF8"
+					},
+					{
+						"name": "Date",
+						"type": "UTF8"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLSLinkedService')]"
@@ -2436,16 +2474,16 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
-							"name": "geologia"
+							"name": "source1"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_master_trabajofinal",
+								"referenceName": "ds_master_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -2461,16 +2499,17 @@
 						"          Estimacion as string,",
 						"          Estatus as string,",
 						"          Nombre_de_Estructura as string,",
-						"          Full_Year_Budget as double,",
-						"          Budget_YTD_April as double,",
-						"          Actual_YTD_April as double,",
+						"          Full_Year_Budget as string,",
+						"          Budget_YTD_April as string,",
+						"          Actual_YTD_April as string,",
 						"          Detalle as string,",
 						"          Observacion as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> geologia",
-						"geologia derive(Estimacion = toString(Estimacion),",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> source1",
+						"source1 derive(Estimacion = toString(Estimacion),",
 						"          Estatus = toString(Estatus),",
 						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
 						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
@@ -2478,11 +2517,18 @@
 						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
 						"          Detalle = toString(Detalle),",
 						"          Observacion = toString(Observacion),",
-						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
-						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"          ActualVSFullYearBudget = toDouble(Actual_YTD_April)-toDouble(Full_Year_Budget),",
+						"          ActualVSBudgetApril = toDouble(Actual_YTD_April)-toDouble(Budget_YTD_April)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     filePattern:'m_geologia.csv',",
+						"     input(",
+						"          Id as integer,",
+						"          Name as string,",
+						"          UserId as integer,",
+						"          Date as date",
+						"     ),",
+						"     format: 'parquet',",
+						"     filePattern:'m_geologia[n].parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2492,8 +2538,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalparquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinalparquet')]"
 			]
 		},
 		{
@@ -2506,16 +2552,16 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
-							"name": "geomecanica"
+							"name": "source1"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_master_trabajofinal",
+								"referenceName": "ds_master_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -2531,16 +2577,17 @@
 						"          Estimacion as string,",
 						"          Estatus as string,",
 						"          Nombre_de_Estructura as string,",
-						"          Full_Year_Budget as double,",
-						"          Budget_YTD_April as double,",
-						"          Actual_YTD_April as double,",
+						"          Full_Year_Budget as string,",
+						"          Budget_YTD_April as string,",
+						"          Actual_YTD_April as string,",
 						"          Detalle as string,",
 						"          Observacion as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> geomecanica",
-						"geomecanica derive(Estimacion = toString(Estimacion),",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> source1",
+						"source1 derive(Estimacion = toString(Estimacion),",
 						"          Estatus = toString(Estatus),",
 						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
 						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
@@ -2548,11 +2595,18 @@
 						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
 						"          Detalle = toString(Detalle),",
 						"          Observacion = toString(Observacion),",
-						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
-						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"          ActualVSFullYearBudget = toDouble(Actual_YTD_April)-toDouble(Full_Year_Budget),",
+						"          ActualVSBudgetApril = toDouble(Actual_YTD_April)-toDouble(Budget_YTD_April)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     filePattern:'m_geomecanica.csv',",
+						"     input(",
+						"          Id as integer,",
+						"          Name as string,",
+						"          UserId as integer,",
+						"          Date as date",
+						"     ),",
+						"     format: 'parquet',",
+						"     filePattern:'m_geomecanica[n].parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2562,8 +2616,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalparquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinalparquet')]"
 			]
 		},
 		{
@@ -2576,16 +2630,16 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
-							"name": "oportunidades"
+							"name": "source1"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_master_trabajofinal",
+								"referenceName": "ds_master_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -2601,16 +2655,17 @@
 						"          Estimacion as string,",
 						"          Estatus as string,",
 						"          Nombre_de_Estructura as string,",
-						"          Full_Year_Budget as double,",
-						"          Budget_YTD_April as double,",
-						"          Actual_YTD_April as double,",
+						"          Full_Year_Budget as string,",
+						"          Budget_YTD_April as string,",
+						"          Actual_YTD_April as string,",
 						"          Detalle as string,",
 						"          Observacion as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> oportunidades",
-						"oportunidades derive(Estimacion = toString(Estimacion),",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> source1",
+						"source1 derive(Estimacion = toString(Estimacion),",
 						"          Estatus = toString(Estatus),",
 						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
 						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
@@ -2618,11 +2673,18 @@
 						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
 						"          Detalle = toString(Detalle),",
 						"          Observacion = toString(Observacion),",
-						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
-						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"          ActualVSFullYearBudget = toDouble(Actual_YTD_April)-toDouble(Full_Year_Budget),",
+						"          ActualVSBudgetApril = toDouble(Actual_YTD_April)-toDouble(Budget_YTD_April)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     filePattern:'m_oportunidades.csv',",
+						"     input(",
+						"          Id as integer,",
+						"          Name as string,",
+						"          UserId as integer,",
+						"          Date as date",
+						"     ),",
+						"     format: 'parquet',",
+						"     filePattern:'m_oportunidades[n].parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2632,8 +2694,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalparquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinalparquet')]"
 			]
 		},
 		{
@@ -2646,16 +2708,16 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
-							"name": "planeamiento"
+							"name": "source1"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_master_trabajofinal",
+								"referenceName": "ds_master_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -2671,16 +2733,17 @@
 						"          Estimacion as string,",
 						"          Estatus as string,",
 						"          Nombre_de_Estructura as string,",
-						"          Full_Year_Budget as double,",
-						"          Budget_YTD_April as double,",
-						"          Actual_YTD_April as double,",
+						"          Full_Year_Budget as string,",
+						"          Budget_YTD_April as string,",
+						"          Actual_YTD_April as string,",
 						"          Detalle as string,",
 						"          Observacion as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> planeamiento",
-						"planeamiento derive(Estimacion = toString(Estimacion),",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> source1",
+						"source1 derive(Estimacion = toString(Estimacion),",
 						"          Estatus = toString(Estatus),",
 						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
 						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
@@ -2688,11 +2751,18 @@
 						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
 						"          Detalle = toString(Detalle),",
 						"          Observacion = toString(Observacion),",
-						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
-						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"          ActualVSFullYearBudget = toDouble(Actual_YTD_April)-toDouble(Full_Year_Budget),",
+						"          ActualVSBudgetApril = toDouble(Actual_YTD_April)-toDouble(Budget_YTD_April)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     filePattern:'m_planeamiento.csv',",
+						"     input(",
+						"          Id as integer,",
+						"          Name as string,",
+						"          UserId as integer,",
+						"          Date as date",
+						"     ),",
+						"     format: 'parquet',",
+						"     filePattern:'m_planeamiento[n].parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2702,8 +2772,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalparquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinalparquet')]"
 			]
 		},
 		{
@@ -2716,16 +2786,16 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "ds_target_trabajofinalexcel",
+								"referenceName": "ds_target_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
-							"name": "retrasosoperativos"
+							"name": "source1"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "ds_master_trabajofinal",
+								"referenceName": "ds_master_trabajofinalparquet",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -2741,16 +2811,17 @@
 						"          Estimacion as string,",
 						"          Estatus as string,",
 						"          Nombre_de_Estructura as string,",
-						"          Full_Year_Budget as double,",
-						"          Budget_YTD_April as double,",
-						"          Actual_YTD_April as double,",
+						"          Full_Year_Budget as string,",
+						"          Budget_YTD_April as string,",
+						"          Actual_YTD_April as string,",
 						"          Detalle as string,",
 						"          Observacion as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> retrasosoperativos",
-						"retrasosoperativos derive(Estimacion = toString(Estimacion),",
+						"     ignoreNoFilesFound: false,",
+						"     format: 'parquet') ~> source1",
+						"source1 derive(Estimacion = toString(Estimacion),",
 						"          Estatus = toString(Estatus),",
 						"          Nombre_de_Estructura = toString(Nombre_de_Estructura),",
 						"          Full_Year_Budget = toDouble(Full_Year_Budget),",
@@ -2758,11 +2829,18 @@
 						"          Actual_YTD_April = toDouble(Actual_YTD_April),",
 						"          Detalle = toString(Detalle),",
 						"          Observacion = toString(Observacion),",
-						"          ActualVSFullYearBudget = Actual_YTD_April-Full_Year_Budget,",
-						"          ActualVSBudget = Actual_YTD_April-Budget_YTD_April) ~> derivedColumn1",
+						"          ActualVSFullYearBudget = toDouble(Actual_YTD_April)-toDouble(Full_Year_Budget),",
+						"          ActualVSBudgetApril = toDouble(Actual_YTD_April)-toDouble(Budget_YTD_April)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     filePattern:'m_retrasos_operativos.csv',",
+						"     input(",
+						"          Id as integer,",
+						"          Name as string,",
+						"          UserId as integer,",
+						"          Date as date",
+						"     ),",
+						"     format: 'parquet',",
+						"     filePattern:'m_retrasos_operativos[n].parquet',",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
@@ -2772,8 +2850,8 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalexcel')]",
-				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinal')]"
+				"[concat(variables('factoryId'), '/datasets/ds_target_trabajofinalparquet')]",
+				"[concat(variables('factoryId'), '/datasets/ds_master_trabajofinalparquet')]"
 			]
 		},
 		{
