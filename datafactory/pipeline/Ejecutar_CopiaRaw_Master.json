@@ -1,5 +1,5 @@
 {
-	"name": "Ejecutar_CopiaRawTF",
+	"name": "Ejecutar_CopiaRaw_Master",
 	"properties": {
 		"activities": [
 			{
@@ -10,6 +10,26 @@
 				"typeProperties": {
 					"pipeline": {
 						"referenceName": "Copiar_TrabajoFinal2",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute_CopiaMasterTF",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute_CopiaRawTF",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "DF_TrabajoFinal",
 						"type": "PipelineReference"
 					},
 					"waitOnCompletion": true
