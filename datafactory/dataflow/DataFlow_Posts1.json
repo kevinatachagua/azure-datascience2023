@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Posts1",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -50,20 +53,20 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Posts1",
-				"Posts1 derive(Id = toInteger(Id),",
-				"          AcceptedAnswerId = toInteger(AcceptedAnswerId),",
+				"Posts1 derive(Id = toString(Id),",
+				"          AcceptedAnswerId = toString(AcceptedAnswerId),",
 				"          AnswerCount = toInteger(AnswerCount),",
-				"          ClosedDate = toDate(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          ClosedDate = toTimestamp(ClosedDate,'yyyy-MM-dd HH:mm:ss'),",
 				"          CommentCount = toInteger(CommentCount),",
-				"          CommunityOwnedDate = toDate(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
-				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          CommunityOwnedDate = toTimestamp(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
 				"          FavoriteCount = toInteger(FavoriteCount),",
-				"          LastActivityDate = toDate(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
-				"          LastEditDate = toDate(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
-				"          LastEditorUserId = toInteger(LastEditorUserId),",
-				"          OwnerUserId = toInteger(OwnerUserId),",
-				"          ParentId = toInteger(ParentId),",
-				"          PostTypeId = toInteger(PostTypeId),",
+				"          LastActivityDate = toTimestamp(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          LastEditDate = toTimestamp(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          LastEditorUserId = toString(LastEditorUserId),",
+				"          OwnerUserId = toString(OwnerUserId),",
+				"          ParentId = toString(ParentId),",
+				"          PostTypeId = toString(PostTypeId),",
 				"          Score = toInteger(Score),",
 				"          Tags = toString(Tags),",
 				"          ViewCount = toInteger(ViewCount)) ~> derivedColumn1",

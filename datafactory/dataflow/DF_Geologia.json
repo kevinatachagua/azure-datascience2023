@@ -1,6 +1,9 @@
 {
 	"name": "DF_Geologia",
 	"properties": {
+		"folder": {
+			"name": "TrabajoFinal"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

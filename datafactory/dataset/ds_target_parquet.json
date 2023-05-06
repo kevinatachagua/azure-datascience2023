@@ -19,6 +19,9 @@
 				"defaultValue": "badges"
 			}
 		},
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

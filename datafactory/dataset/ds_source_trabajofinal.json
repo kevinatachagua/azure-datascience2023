@@ -15,6 +15,9 @@
 				"defaultValue": "Geologia2.csv"
 			}
 		},
+		"folder": {
+			"name": "TrabajoFinal"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

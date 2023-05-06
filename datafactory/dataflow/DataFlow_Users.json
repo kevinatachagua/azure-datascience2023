@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Users",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -42,14 +45,14 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Users",
-				"Users derive(Id = toInteger(Id),",
-				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"Users derive(Id = toString(Id),",
+				"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
 				"          DownVotes = toInteger(DownVotes),",
-				"          LastAccessDate = toDate(LastAccessDate, 'yyyy-MM-dd HH:mm:ss'),",
+				"          LastAccessDate = toTimestamp(LastAccessDate, 'yyyy-MM-dd HH:mm:ss'),",
 				"          Reputation = toInteger(Reputation),",
 				"          UpVotes = toInteger(UpVotes),",
 				"          Views = toInteger(Views),",
-				"          AccountId = toInteger(AccountId),",
+				"          AccountId = toString(AccountId),",
 				"          Email = toString(Email)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

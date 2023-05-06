@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Posttypes",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -35,7 +38,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Posttypes",
-				"Posttypes derive(Id = toInteger(Id),",
+				"Posttypes derive(Id = toString(Id),",
 				"          Type = toString(Type)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Votes",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -39,12 +42,12 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Votes",
-				"Votes derive(Id = toInteger(Id),",
-				"          PostId = toInteger(PostId),",
-				"          UserId = toInteger(UserId),",
+				"Votes derive(Id = toString(Id),",
+				"          PostId = toString(PostId),",
+				"          UserId = toString(UserId),",
 				"          BountyAmount = toInteger(BountyAmount),",
-				"          VoteTypeId = toInteger(VoteTypeId),",
-				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
+				"          VoteTypeId = toString(VoteTypeId),",
+				"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",

@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Comments",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -38,11 +41,11 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Comments",
-				"Comments derive(Id = toInteger(Id),",
-				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
-				"          PostId = toInteger(PostId),",
+				"Comments derive(Id = toString(Id),",
+				"          CreationDate = toTimestamp(CreationDate,'yyyy-MM-dd HH:mm:ss'),",
+				"          PostId = toString(PostId),",
 				"          Score = toInteger(Score),",
-				"          UserId = toInteger(UserId)) ~> derivedColumn1",
+				"          UserId = toString(UserId)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",

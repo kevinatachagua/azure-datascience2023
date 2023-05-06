@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Postlinks",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -38,11 +41,11 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Postlinks",
-				"Postlinks derive(Id = toInteger(Id),",
-				"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
-				"          PostId = toInteger(PostId),",
-				"          RelatedPostId = toInteger(RelatedPostId),",
-				"          LinkTypeId = toInteger(LinkTypeId)) ~> derivedColumn1",
+				"Postlinks derive(Id = toString(Id),",
+				"          CreationDate = toTimestamp(CreationDate,'yyyy-MM-dd HH:mm:ss'),",
+				"          PostId = toString(PostId),",
+				"          RelatedPostId = toString(RelatedPostId),",
+				"          LinkTypeId = toString(LinkTypeId)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",

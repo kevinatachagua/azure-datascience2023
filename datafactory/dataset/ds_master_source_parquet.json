@@ -19,6 +19,9 @@
 				"defaultValue": "m_comments"
 			}
 		},
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

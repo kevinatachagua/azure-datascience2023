@@ -1,5 +1,5 @@
 {
-	"name": "raw_know_core",
+	"name": "CopiaRaw",
 	"properties": {
 		"activities": [
 			{
@@ -732,7 +732,7 @@
 			}
 		},
 		"folder": {
-			"name": "01_raw_source"
+			"name": "TrabajoIndividual"
 		},
 		"annotations": [],
 		"lastPublishTime": "2023-04-14T00:52:17Z"

@@ -1,6 +1,9 @@
 {
 	"name": "DF_Retrasos_Operativos",
 	"properties": {
+		"folder": {
+			"name": "TrabajoFinal"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

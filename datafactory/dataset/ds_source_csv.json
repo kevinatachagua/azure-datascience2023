@@ -16,6 +16,9 @@
 				"type": "string"
 			}
 		},
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Votetypes",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -35,7 +38,7 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Votetypes",
-				"Votetypes derive(Id = toInteger(Id),",
+				"Votetypes derive(Id = toString(Id),",
 				"          Name = toString(Name)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",

@@ -1,6 +1,9 @@
 {
 	"name": "DF_Geomecanica",
 	"properties": {
+		"folder": {
+			"name": "TrabajoFinal"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [

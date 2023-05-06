@@ -1,0 +1,44 @@
+{
+	"name": "Execute_Raw_Master",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Raw",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "CopiaRaw",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "Execute Master",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Execute Raw",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "CopiaMaster",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
+		"annotations": []
+	}
+}

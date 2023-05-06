@@ -1,6 +1,9 @@
 {
 	"name": "DataFlow_Badges",
 	"properties": {
+		"folder": {
+			"name": "TrabajoIndividual"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
@@ -37,10 +40,10 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false,",
 				"     format: 'parquet') ~> Badges",
-				"Badges derive(Id = toInteger(Id),",
-				"          UserId = toInteger(UserId),",
+				"Badges derive(Id = toString(Id),",
+				"          UserId = toString(UserId),",
 				"          Name = toString(Name),",
-				"          Date = toDate(Date, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
+				"          Date = toTimestamp(Date,'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
