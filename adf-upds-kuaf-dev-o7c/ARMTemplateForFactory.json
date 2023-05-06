@@ -1374,7 +1374,14 @@
 					{
 						"name": "Copy_Users",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Copy_Posttypes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -1440,14 +1447,7 @@
 					{
 						"name": "Copy_Badges",
 						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Copy_Comments",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -1515,7 +1515,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Users",
+								"activity": "Copy_Badges",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1588,7 +1588,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Badges",
+								"activity": "Copy_Comments",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1953,7 +1953,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Posttypes",
+								"activity": "Copy_Users",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -2138,6 +2138,9 @@
 						"defaultValue": "m_comments"
 					}
 				},
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -2174,6 +2177,9 @@
 					"appname": {
 						"type": "string"
 					}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -2235,6 +2241,9 @@
 						"type": "string"
 					}
 				},
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -2282,6 +2291,9 @@
 						"type": "string",
 						"defaultValue": "Geologia2.csv"
 					}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
@@ -2336,6 +2348,9 @@
 						"defaultValue": "badges"
 					}
 				},
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
@@ -2372,6 +2387,9 @@
 					"appname": {
 						"type": "string"
 					}
+				},
+				"folder": {
+					"name": "TrabajoFinal"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -2469,6 +2487,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoFinal"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2548,6 +2569,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoFinal"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2627,6 +2651,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoFinal"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2706,6 +2733,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoFinal"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2785,6 +2815,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoFinal"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2864,6 +2897,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2900,10 +2936,10 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Badges",
-						"Badges derive(Id = toInteger(Id),",
-						"          UserId = toInteger(UserId),",
+						"Badges derive(Id = toString(Id),",
+						"          UserId = toString(UserId),",
 						"          Name = toString(Name),",
-						"          Date = toDate(Date, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
+						"          Date = toTimestamp(Date,'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
@@ -2926,6 +2962,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -2963,11 +3002,11 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Comments",
-						"Comments derive(Id = toInteger(Id),",
-						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          PostId = toInteger(PostId),",
+						"Comments derive(Id = toString(Id),",
+						"          CreationDate = toTimestamp(CreationDate,'yyyy-MM-dd HH:mm:ss'),",
+						"          PostId = toString(PostId),",
 						"          Score = toInteger(Score),",
-						"          UserId = toInteger(UserId)) ~> derivedColumn1",
+						"          UserId = toString(UserId)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
@@ -2990,6 +3029,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3024,7 +3066,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Linktypes",
-						"Linktypes derive(Id = toInteger(Id),",
+						"Linktypes derive(Id = toString(Id),",
 						"          Type = toString(Type)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -3048,6 +3090,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3085,11 +3130,11 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Postlinks",
-						"Postlinks derive(Id = toInteger(Id),",
-						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          PostId = toInteger(PostId),",
-						"          RelatedPostId = toInteger(RelatedPostId),",
-						"          LinkTypeId = toInteger(LinkTypeId)) ~> derivedColumn1",
+						"Postlinks derive(Id = toString(Id),",
+						"          CreationDate = toTimestamp(CreationDate,'yyyy-MM-dd HH:mm:ss'),",
+						"          PostId = toString(PostId),",
+						"          RelatedPostId = toString(RelatedPostId),",
+						"          LinkTypeId = toString(LinkTypeId)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
@@ -3112,6 +3157,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3161,20 +3209,20 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Posts1",
-						"Posts1 derive(Id = toInteger(Id),",
-						"          AcceptedAnswerId = toInteger(AcceptedAnswerId),",
+						"Posts1 derive(Id = toString(Id),",
+						"          AcceptedAnswerId = toString(AcceptedAnswerId),",
 						"          AnswerCount = toInteger(AnswerCount),",
-						"          ClosedDate = toDate(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          ClosedDate = toTimestamp(ClosedDate,'yyyy-MM-dd HH:mm:ss'),",
 						"          CommentCount = toInteger(CommentCount),",
-						"          CommunityOwnedDate = toDate(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CommunityOwnedDate = toTimestamp(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
 						"          FavoriteCount = toInteger(FavoriteCount),",
-						"          LastActivityDate = toDate(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          LastEditDate = toDate(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          LastEditorUserId = toInteger(LastEditorUserId),",
-						"          OwnerUserId = toInteger(OwnerUserId),",
-						"          ParentId = toInteger(ParentId),",
-						"          PostTypeId = toInteger(PostTypeId),",
+						"          LastActivityDate = toTimestamp(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditDate = toTimestamp(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditorUserId = toString(LastEditorUserId),",
+						"          OwnerUserId = toString(OwnerUserId),",
+						"          ParentId = toString(ParentId),",
+						"          PostTypeId = toString(PostTypeId),",
 						"          Score = toInteger(Score),",
 						"          Tags = toString(Tags),",
 						"          ViewCount = toInteger(ViewCount)) ~> derivedColumn1",
@@ -3200,6 +3248,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3249,20 +3300,20 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Posts2",
-						"Posts2 derive(Id = toInteger(Id),",
-						"          AcceptedAnswerId = toInteger(AcceptedAnswerId),",
+						"Posts2 derive(Id = toString(Id),",
+						"          AcceptedAnswerId = toString(AcceptedAnswerId),",
 						"          AnswerCount = toInteger(AnswerCount),",
-						"          ClosedDate = toDate(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          ClosedDate = toTimestamp(ClosedDate, 'yyyy-MM-dd HH:mm:ss'),",
 						"          CommentCount = toInteger(CommentCount),",
-						"          CommunityOwnedDate = toDate(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CommunityOwnedDate = toTimestamp(CommunityOwnedDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
 						"          FavoriteCount = toInteger(FavoriteCount),",
-						"          LastActivityDate = toDate(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          LastEditDate = toDate(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
-						"          LastEditorUserId = toInteger(LastEditorUserId),",
-						"          OwnerUserId = toInteger(OwnerUserId),",
-						"          ParentId = toInteger(ParentId),",
-						"          PostTypeId = toInteger(PostTypeId),",
+						"          LastActivityDate = toTimestamp(LastActivityDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditDate = toTimestamp(LastEditDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastEditorUserId = toString(LastEditorUserId),",
+						"          OwnerUserId = toString(OwnerUserId),",
+						"          ParentId = toString(ParentId),",
+						"          PostTypeId = toString(PostTypeId),",
 						"          Score = toInteger(Score),",
 						"          Tags = toString(Tags),",
 						"          ViewCount = toInteger(ViewCount)) ~> derivedColumn1",
@@ -3288,6 +3339,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3322,7 +3376,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Posttypes",
-						"Posttypes derive(Id = toInteger(Id),",
+						"Posttypes derive(Id = toString(Id),",
 						"          Type = toString(Type)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -3346,6 +3400,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3387,14 +3444,14 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Users",
-						"Users derive(Id = toInteger(Id),",
-						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"Users derive(Id = toString(Id),",
+						"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss'),",
 						"          DownVotes = toInteger(DownVotes),",
-						"          LastAccessDate = toDate(LastAccessDate, 'yyyy-MM-dd HH:mm:ss'),",
+						"          LastAccessDate = toTimestamp(LastAccessDate, 'yyyy-MM-dd HH:mm:ss'),",
 						"          Reputation = toInteger(Reputation),",
 						"          UpVotes = toInteger(UpVotes),",
 						"          Views = toInteger(Views),",
-						"          AccountId = toInteger(AccountId),",
+						"          AccountId = toString(AccountId),",
 						"          Email = toString(Email)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -3418,6 +3475,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3456,12 +3516,12 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Votes",
-						"Votes derive(Id = toInteger(Id),",
-						"          PostId = toInteger(PostId),",
-						"          UserId = toInteger(UserId),",
+						"Votes derive(Id = toString(Id),",
+						"          PostId = toString(PostId),",
+						"          UserId = toString(UserId),",
 						"          BountyAmount = toInteger(BountyAmount),",
-						"          VoteTypeId = toInteger(VoteTypeId),",
-						"          CreationDate = toDate(CreationDate, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
+						"          VoteTypeId = toString(VoteTypeId),",
+						"          CreationDate = toTimestamp(CreationDate, 'yyyy-MM-dd HH:mm:ss')) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     format: 'parquet',",
@@ -3484,6 +3544,9 @@
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
 				"type": "MappingDataFlow",
 				"typeProperties": {
 					"sources": [
@@ -3518,7 +3581,7 @@
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false,",
 						"     format: 'parquet') ~> Votetypes",
-						"Votetypes derive(Id = toInteger(Id),",
+						"Votetypes derive(Id = toString(Id),",
 						"          Name = toString(Name)) ~> derivedColumn1",
 						"derivedColumn1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -3613,6 +3676,1290 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]",
 				"[concat(variables('factoryId'), '/datasets/ds_master_source_parquet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopiaMaster')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "DF_Badges",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Badges",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Badges": {
+										"filename": "badges.parquet",
+										"appname": "sharedknow",
+										"objectname": "badges"
+									},
+									"sink2": {
+										"filename": "m_badges.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_badges"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Comments",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Badges",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Comments",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Comments": {
+										"filename": "comments.parquet",
+										"appname": "sharedknow",
+										"objectname": "comments"
+									},
+									"sink2": {
+										"filename": "m_comments.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_comments"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Linktypes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Comments",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Linktypes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Linktypes": {
+										"filename": "linktypes.parquet",
+										"appname": "sharedknow",
+										"objectname": "linktypes"
+									},
+									"sink2": {
+										"filename": "m_linktypes.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_linktypes"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Postlinks",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Linktypes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Postlinks",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Postlinks": {
+										"filename": "postlinks.parquet",
+										"appname": "sharedknow",
+										"objectname": "postlinks"
+									},
+									"sink2": {
+										"filename": "m_postlinks.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_postlinks"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Posts1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Postlinks",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Posts1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Posts1": {
+										"filename": "2008-01-01/posts_200801.parquet",
+										"appname": "sharedknow",
+										"objectname": "posts"
+									},
+									"sink2": {
+										"filename": "m_2008-01-01/m_posts_200801.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_posts"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Posts2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Posts1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Posts2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Posts2": {
+										"filename": "2009-01-01/posts_200901.parquet",
+										"appname": "sharedknow",
+										"objectname": "posts"
+									},
+									"sink2": {
+										"filename": "m_2009-01-01/m_posts_200901.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_posts"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Posttypes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Posts2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Posttypes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Posttypes": {
+										"filename": "posttypes.parquet",
+										"appname": "sharedknow",
+										"objectname": "posttypes"
+									},
+									"sink2": {
+										"filename": "posttypes.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_posttypes"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Users",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Posttypes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Users",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Users": {
+										"filename": "users.parquet",
+										"appname": "sharedknow",
+										"objectname": "users"
+									},
+									"sink2": {
+										"filename": "users.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_users"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Votes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Votes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Votes": {
+										"filename": "votes.parquet",
+										"appname": "sharedknow",
+										"objectname": "votes"
+									},
+									"sink2": {
+										"filename": "votes.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_votes"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "DF_Votetypes",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DF_Votes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "DataFlow_Votetypes",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Votetypes": {
+										"filename": "votetypes.parquet",
+										"appname": "sharedknow",
+										"objectname": "votetypes"
+									},
+									"sink2": {
+										"filename": "votetypes.parquet",
+										"appname": "m_sharedknow",
+										"objectname": "m_votetypes"
+									}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"demo": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-04-14T00:52:17Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Badges')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Comments')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Linktypes')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Postlinks')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Posts1')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Posts2')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Posttypes')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Users')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Votes')]",
+				"[concat(variables('factoryId'), '/dataflows/DataFlow_Votetypes')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CopiaRaw')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_Users",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Posttypes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_users.csv",
+									"appname": "sharedknow",
+									"objectname": "users"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "users.parquet",
+									"appname": "sharedknow",
+									"objectname": "users"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Badges",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_badges.csv",
+									"appname": "sharedknow",
+									"objectname": "badges"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "badges.parquet",
+									"appname": "sharedknow",
+									"objectname": "badges"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Comments",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Badges",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_comments.csv",
+									"appname": "sharedknow",
+									"objectname": "comments"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "comments.parquet",
+									"appname": "sharedknow",
+									"objectname": "comments"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Linktypes",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Comments",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_linktypes.csv",
+									"appname": "sharedknow",
+									"objectname": "linktypes"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "linktypes.parquet",
+									"appname": "sharedknow",
+									"objectname": "linktypes"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Postlinks",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Linktypes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_postlinks.csv",
+									"appname": "sharedknow",
+									"objectname": "postlinks"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "postlinks.parquet",
+									"appname": "sharedknow",
+									"objectname": "postlinks"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Posts1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Postlinks",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "2008-01-01\\sk_posts_200801.csv",
+									"appname": "sharedknow",
+									"objectname": "posts"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "2008-01-01\\posts_200801.parquet",
+									"appname": "sharedknow",
+									"objectname": "posts"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Posts2",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Posts1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "2009-01-01\\sk_posts_200901.csv",
+									"appname": "sharedknow",
+									"objectname": "posts"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "2009-01-01\\posts_200901.parquet",
+									"appname": "sharedknow",
+									"objectname": "posts"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Posttypes",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Posts2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_posttypes.csv",
+									"appname": "sharedknow",
+									"objectname": "posttypes"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "posttypes.parquet",
+									"appname": "sharedknow",
+									"objectname": "posttypes"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Votes",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Users",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_votes.csv",
+									"appname": "sharedknow",
+									"objectname": "votes"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "votes.parquet",
+									"appname": "sharedknow",
+									"objectname": "votes"
+								}
+							}
+						]
+					},
+					{
+						"name": "Copy_Votetypes",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Votes",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "ds_source_csv",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "sk_votetypes.csv",
+									"appname": "sharedknow",
+									"objectname": "votetypes"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ds_target_parquet",
+								"type": "DatasetReference",
+								"parameters": {
+									"filename": "votetypes.parquet",
+									"appname": "sharedknow",
+									"objectname": "votetypes"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"variables": {
+					"demo": {
+						"type": "String"
+					}
+				},
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-04-14T00:52:17Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ds_source_csv')]",
+				"[concat(variables('factoryId'), '/datasets/ds_target_parquet')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Execute_Raw_Master')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Execute Raw",
+						"type": "ExecutePipeline",
+						"dependsOn": [],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "CopiaRaw",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					},
+					{
+						"name": "Execute Master",
+						"type": "ExecutePipeline",
+						"dependsOn": [
+							{
+								"activity": "Execute Raw",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"userProperties": [],
+						"typeProperties": {
+							"pipeline": {
+								"referenceName": "CopiaMaster",
+								"type": "PipelineReference"
+							},
+							"waitOnCompletion": true,
+							"parameters": {}
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "TrabajoIndividual"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/CopiaRaw')]",
+				"[concat(variables('factoryId'), '/pipelines/CopiaMaster')]"
 			]
 		}
 	]
